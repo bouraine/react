@@ -3,3 +3,5 @@ node_modules
 .iml
 react-from-scratch/public/
 .idea/
+public/bundle.js
+/public
