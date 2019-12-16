@@ -1,0 +1,12 @@
+.App {
+  text-align: center;
+}
+
+.pointer{
+  cursor: pointer;
+}
+
+.table th, .table td{
+  padding: 12px !important;
+  margin: 0 !important;
+}
