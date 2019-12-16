@@ -1,59 +1,84 @@
 import React from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
-import { map, range, findIndex } from "lodash";
+import { map, range, findIndex, find, includes } from "lodash";
 import { NavigateNext, NavigateBefore } from "@material-ui/icons";
 
-interface WorkMonth {
-  month: string;
-  days: string[];
-}
-
-interface Employee {
+interface TeamMember {
   name: string;
-  months: WorkMonth[];
+  absences: string[];
 }
 
-export interface SalariesDTO {
-  employees: Employee[];
+interface Month {
+  name: string;
+  id: number;
+  firstDate: number;
+  nbDays: number;
 }
 
-const getSalaries = (): Promise<SalariesDTO> => fetch("./data.json").then(r => r.json());
-const listMonth = ["January", "February", "March", "April", "Mai", "June"];
+const currentYear = 2020;
+
+const listMonthNames: string[] = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "Mai",
+  "June",
+  "July",
+  "August",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Déc"
+];
+
+const getData = (): Promise<TeamMember[]> => fetch("./data2.json").then(r => r.json());
+
+const getYearMonths = (year: number): Month[] =>
+  range(0, 12).reduce((acc, curr, i) => {
+    const day = new Date(year, i, 1);
+    const nbDays = new Date(year, i + 1, 0).getDate();
+    return [...acc, { name: listMonthNames[day.getMonth()], firstDate: day.getDay(), nbDays, id: i }];
+  }, [] as Month[]);
+
+const isWeekend = (firstDay: number, i: number) => (i + firstDay + 1) % 7 === 0 || (i + firstDay + 1) % 7 === 1;
 
 const App: React.FC = () => {
-  const [employees, setEmployees] = React.useState<Employee[]>([]);
-  const [currentMonth, setCurrentMonth] = React.useState<string>("January");
+  const [teamMembers, setTeamMembers] = React.useState<TeamMember[]>([]);
+  const [currentMonth, setCurrentMonth] = React.useState<Month>(getYearMonths(currentYear)[0]);
+  const [yearMonths, _] = React.useState(getYearMonths(currentYear));
+
   React.useEffect(() => {
-    getSalaries().then(resp => {
-      console.log(resp);
-      setEmployees(resp.employees);
+    getData().then(resp => {
+      setTeamMembers(resp);
     });
   }, []);
 
   const handleOnNext = () => {
-    const index = findIndex(listMonth, x => x === currentMonth);
-    const nextIndex = (index + 1) % 5;
-    setCurrentMonth(listMonth[nextIndex]);
+    const index = findIndex(yearMonths, { name: currentMonth.name });
+    const nextIndex = (index + 1) % 11;
+    console.log(yearMonths);
+    setCurrentMonth(yearMonths[nextIndex]);
   };
 
   const handleOnPrevious = () => {
-    const index = findIndex(listMonth, x => x === currentMonth);
-    const nextIndex = (index + 4) % 5;
-    setCurrentMonth(listMonth[nextIndex]);
+    const index = findIndex(yearMonths, { name: currentMonth.name });
+    const nextIndex = (index + 11) % 12;
+    setCurrentMonth(yearMonths[nextIndex]);
   };
 
   return (
     <div className="App container-fluid mt-5">
       <header className="App-header"> </header>
 
-      <table className="table tab-content table-responsive">
+      <table className="table table-bordered tab-content table-responsive-lg">
         <tr>
           <td onClick={handleOnPrevious} className="pointer">
             <NavigateBefore />
           </td>
           <td colSpan={30} className="font-weight-bold">
-            {currentMonth}
+            {currentMonth.name}
           </td>
           <td className="pointer" onClick={handleOnNext}>
             <NavigateNext />
@@ -61,16 +86,18 @@ const App: React.FC = () => {
         </tr>
         <tr>
           <th />
-          {map(range(1, 32), x => (
-            <th scope="col">{x}</th>
+          {map(range(0, currentMonth.nbDays), x => (
+            <th scope="col">{x + 1}</th>
           ))}
         </tr>
-        {map(employees, employee => (
+        {map(teamMembers, member => (
           <tr>
-            <td>{employee.name}</td>
-            {map(employee.months.find(x => x.month === currentMonth)?.days, (x, i) => (
-              <td>{x}</td>
-            ))}
+            <td>{member.name}</td>
+            {map(range(1, (find(yearMonths, { name: currentMonth.name })?.nbDays || 0) + 1), (x, i) => {
+              const currentDate = new Date(Date.UTC(currentYear, currentMonth.id, x)).toISOString().split("T")[0];
+              const isOff = includes(member.absences, currentDate);
+              return <td>{isWeekend(currentMonth.firstDate, i) ? "w" : isOff ? "x" : ""}</td>;
+            })}
           </tr>
         ))}
       </table>
