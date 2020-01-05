@@ -1,8 +1,8 @@
 import React from "react";
-import { map, range, find } from "lodash";
+import { map, range } from "lodash";
 import { isDayOff, isWeekend } from "./utils";
 import { Month } from "./typings";
-import Day from "./Day";
+import Day from "./CalendarDay";
 
 interface Props {
   month: Month;

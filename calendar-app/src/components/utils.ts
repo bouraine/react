@@ -1,5 +1,5 @@
 import { range, includes } from "lodash";
-import {listMonthNames, Month, TeamMember} from "./typings";
+import { listMonthNames, Month, TeamMember } from "./typings";
 
 export const getYearMonths = (year: number): Month[] =>
   range(0, 12).reduce((acc, curr, i) => {
