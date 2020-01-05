@@ -10,14 +10,16 @@ export interface Props {
 const CalendarHeader: React.FC<Props> = ({ month, handleOnPrevious, handleOnNext }) => {
   return (
     <tr>
-      <th onClick={handleOnPrevious} className="pointer">
-        <NavigateBefore />
-      </th>
-      <th colSpan={30} className="font-weight-bold">
-        {month}
-      </th>
-      <th className="pointer" onClick={handleOnNext}>
-        <NavigateNext />
+      <th colSpan={32} className="text-wrap">
+        <span onClick={handleOnPrevious}>
+          <NavigateBefore className="pointer" />
+        </span>
+        <span className="mx-2" style={{ minWidth: "200px" }}>
+          {month}
+        </span>
+        <span onClick={handleOnNext} className="pointer">
+          <NavigateNext />
+        </span>
       </th>
     </tr>
   );

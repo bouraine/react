@@ -1,14 +1,19 @@
 import React from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
-import Calendar from "./components/Calendar";
+import CalendarSelector from "./components/CalendarSelector";
+import { Provider } from "react-redux";
+import { configureStore } from "./app/configureStore";
+
+const appStore = configureStore();
 
 const App: React.FC = () => {
   return (
-    <div className="App container-fluid mt-5">
-      <header className="App-header"> </header>
-      <Calendar year={2020} />
-    </div>
+    <Provider store={appStore}>
+      <div className="App container-fluid mt-5">
+        <CalendarSelector year={2020} />
+      </div>
+    </Provider>
   );
 };
 

@@ -10,7 +10,9 @@ const CalendarDayHeader: React.FC<Props> = ({ nbDays }) => {
     <tr>
       <th />
       {map(range(0, 31), day => (
-        <th scope={`col ${day < nbDays ? "d-none" : ""}`}>{day + 1}</th>
+        <th key={day} scope={`col ${day < nbDays ? "d-none" : ""}`}>
+          {day + 1}
+        </th>
       ))}
     </tr>
   );

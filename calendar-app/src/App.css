@@ -2,11 +2,18 @@
   text-align: center;
 }
 
-.pointer{
+.pointer {
   cursor: pointer;
 }
 
-.table th, .table td{
-  padding: 12px !important;
+.table th,
+.table td {
+  padding: 5px !important;
+  min-width: 30px;
   margin: 0 !important;
+  font-size: 13px;
+}
+
+.table td svg {
+  font-size: 14px;
 }
