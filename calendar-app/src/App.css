@@ -8,6 +8,12 @@
 
 .table th,
 .table td {
-  padding: 12px !important;
+  padding: 5px !important;
+  min-width: 30px;
   margin: 0 !important;
+  font-size: 13px;
+}
+
+.table td svg {
+  font-size: 14px;
 }

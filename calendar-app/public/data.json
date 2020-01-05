@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Eric Reddet",
+    "absences": ["2020-01-22", "2020-01-02"]
+  },
+  {
+    "name": "Mathieu Christiens",
+    "absences": ["2020-01-10", "2020-02-04"]
+  },
+  {
+    "name": "Maxime Amsallem",
+    "absences": ["2020-01-10", "2020-02-04"]
+  },
+  {
+    "name": "Raphael Blemus",
+    "absences": ["2020-01-10", "2020-02-04"]
+  },
+  {
+    "name": "Victor Mahon",
+    "absences": ["2020-01-10", "2020-02-04"]
+  },
+  {
+    "name": "Billy Chabane",
+    "absences": ["2020-01-01", "2020-02-14"]
+  }
+]

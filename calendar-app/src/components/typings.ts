@@ -7,13 +7,13 @@ export const listMonthNames: string[] = [
   "June",
   "July",
   "August",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Déc"
+  "September",
+  "October",
+  "November",
+  "December"
 ];
 
-export interface TeamMember {
+export interface Absences {
   name: string;
   absences: string[];
 }

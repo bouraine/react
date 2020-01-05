@@ -12,10 +12,10 @@ interface Props {
 
 export const CalendarRow: React.FC<Props> = ({ memberName, month, absences }) => (
   <tr>
-    <td>{memberName}</td>
+    <td className="text-nowrap">{memberName}</td>
     {map(range(1, 32), (day, i) => {
       const typeDay = isDayOff(month.year, month.id, day, absences) ? "abs" : isWeekend(month.firstDate, i) ? "we" : "";
-      return <Day type={typeDay} />;
+      return <Day key={i} type={typeDay} />;
     })}
   </tr>
 );
