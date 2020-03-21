@@ -5,6 +5,7 @@ import CalendarRow from "./CalendarRow";
 import { Month, TeamMember } from "./typings";
 import { getData, getYearMonths } from "./utils";
 import { findIndex, map } from "lodash";
+import MeasureRenderer from "./MeasureRenderer";
 
 export interface Props {
   year: number;
@@ -34,13 +35,19 @@ const Calendar: React.FC<Props> = ({ year }) => {
   }, []);
 
   return (
-    <table className="table table-striped table-bordered tab-content table-responsive-lg">
-      <CalendarHeader handleOnNext={handleOnNext} handleOnPrevious={handleOnPrevious} month={currentMonth.name} />
-      <CalendarDayHeader nbDays={currentMonth.nbDays} />
-      {map(teamMembers, member => (
-        <CalendarRow month={currentMonth} memberName={member.name} absences={member.absences} />
-      ))}
-    </table>
+    <MeasureRenderer name="calendar">
+      <table className="table table-striped table-bordered tab-content table-responsive-lg">
+        <thead>
+          <CalendarHeader handleOnNext={handleOnNext} handleOnPrevious={handleOnPrevious} month={currentMonth.name} />
+          <CalendarDayHeader nbDays={currentMonth.nbDays} />
+        </thead>
+        <tbody>
+          {map(teamMembers, member => (
+            <CalendarRow key={member.name} month={currentMonth} memberName={member.name} absences={member.absences} />
+          ))}
+        </tbody>
+      </table>
+    </MeasureRenderer>
   );
 };
 

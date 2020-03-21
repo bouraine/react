@@ -13,9 +13,9 @@ interface Props {
 export const CalendarRow: React.FC<Props> = ({ memberName, month, absences }) => (
   <tr>
     <td>{memberName}</td>
-    {map(range(1, 32), (day, i) => {
+    {map(range(1, 30222), (day, i) => {
       const typeDay = isDayOff(month.year, month.id, day, absences) ? "abs" : isWeekend(month.firstDate, i) ? "we" : "";
-      return <Day type={typeDay} />;
+      return <Day key={day} type={typeDay} />;
     })}
   </tr>
 );
